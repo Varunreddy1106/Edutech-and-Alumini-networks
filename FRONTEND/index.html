@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlumniConnect - Bridging Education & Careers</title>
+    <style>
+        :root {
+            --color-primary: #2563eb;
+            --color-primary-dark: #1e40af;
+            --color-secondary: #10b981;
+            --color-accent: #f59e0b;
+            --color-background: #f8fafc;
+            --color-surface: #ffffff;
+            --color-text: #1e293b;
+            --color-text-light: #64748b;
+            --color-border: #e2e8f0;
+            --color-success: #10b981;
+            --color-warning: #f59e0b;
+            --color-error: #ef4444;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--color-background);
+            color: var(--color-text);
+            line-height: 1.6;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: var(--color-surface);
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--color-text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--color-primary);
+        }
+
+        .btn {
+            padding: 0.625rem 1.25rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--color-primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--color-primary);
+            border: 2px solid var(--color-primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Dashboard Grid */
+        .dashboard {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: var(--color-surface);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            height: fit-content;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .sidebar-section {
+            margin-bottom: 2rem;
+        }
+
+        .sidebar-section h3 {
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            color: var(--color-text-light);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--color-text);
+        }
+
+        .sidebar-menu li:hover,
+        .sidebar-menu li.active {
+            background: #eff6ff;
+            color: var(--color-primary);
+        }
+
+        /* Main Content Area */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .stat-card {
+            background: var(--color-surface);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .stat-icon.blue { background: #dbeafe; color: var(--color-primary); }
+        .stat-icon.green { background: #d1fae5; color: var(--color-secondary); }
+        .stat-icon.orange { background: #fed7aa; color: var(--color-accent); }
+        .stat-icon.purple { background: #e9d5ff; color: #9333ea; }
+
+        .stat-info h3 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--color-text);
+        }
+
+        .stat-info p {
+            color: var(--color-text-light);
+            font-size: 0.875rem;
+        }
+
+        /* Content Sections */
+        .section {
+            background: var(--color-surface);
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.5rem;
+            color: var(--color-text);
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            border-bottom: 2px solid var(--color-border);
+            margin-bottom: 2rem;
+        }
+
+        .tab {
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            border: none;
+            background: none;
+            color: var(--color-text-light);
+            font-weight: 600;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            color: var(--color-primary);
+            border-bottom-color: var(--color-primary);
+        }
+
+        .tab:hover {
+            color: var(--color-primary);
+        }
+
+        /* Match Cards */
+        .match-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .match-card {
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            background: var(--color-surface);
+            transition: all 0.3s;
+        }
+
+        .match-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-3px);
+        }
+
+        .match-header {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        .match-info h3 {
+            font-size: 1.125rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .match-info p {
+            color: var(--color-text-light);
+            font-size: 0.875rem;
+        }
+
+        .match-score {
+            display: inline-block;
+            background: #dcfce7;
+            color: #166534;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+
+        .match-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .tag {
+            background: var(--color-background);
+            color: var(--color-text);
+            padding: 0.375rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .match-actions {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .btn-sm {
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            flex: 1;
+        }
+
+        /* Job Listings */
+        .job-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .job-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius);
+            transition: all 0.3s;
+        }
+
+        .job-card:hover {
+            box-shadow: var(--shadow-md);
+            border-color: var(--color-primary);
+        }
+
+        .job-info {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex: 1;
+        }
+
+        .company-logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+        }
+
+        .job-details h3 {
+            font-size: 1.125rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .job-meta {
+            display: flex;
+            gap: 1rem;
+            color: var(--color-text-light);
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+        }
+
+        .job-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .badge {
+            padding: 0.375rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .badge-warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        /* Search & Filters */
+        .search-section {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius);
+            font-size: 1rem;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+        }
+
+        select {
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius);
+            background: white;
+            cursor: pointer;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--color-surface);
+            border-radius: var(--radius);
+            padding: 2rem;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-close {
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--color-text-light);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--color-text);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* Notification Badge */
+        .notification-badge {
+            position: relative;
+        }
+
+        .notification-badge::after {
+            content: attr(data-count);
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--color-error);
+            color: white;
+            border-radius: 10px;
+            padding: 2px 6px;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .match-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .job-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+        }
+
+        /* Loading Animation */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .loading {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        /* Success Message */
+        .success-message {
+            background: #d1fae5;
+            color: #065f46;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">
+                <span>🎓</span> AlumniConnect
+            </div>
+            <ul class="nav-links">
+                <li><a href="#dashboard">Dashboard</a></li>
+                <li><a href="#mentors">Find Mentors</a></li>
+                <li><a href="#jobs">Job Board</a></li>
+                <li><a href="#events">Events</a></li>
+                <li class="notification-badge" data-count="3"><a href="#notifications">🔔</a></li>
+                <li><button class="btn btn-primary">My Profile</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <div class="dashboard">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="sidebar-section">
+                    <h3>Navigation</h3>
+                    <ul class="sidebar-menu">
+                        <li class="active" onclick="showSection('overview')">
+                            <span>📊</span> Overview
+                        </li>
+                        <li onclick="showSection('matches')">
+                            <span>🤝</span> AI Matches
+                        </li>
+                        <li onclick="showSection('jobs')">
+                            <span>💼</span> Job Board
+                        </li>
+                        <li onclick="showSection('mentorship')">
+                            <span>👨‍🏫</span> Mentorship
+                        </li>
+                        <li onclick="showSection('network')">
+                            <span>🌐</span> Network
+                        </li>
+                    </ul>
+                </div>
+                <div class="sidebar-section">
+                    <h3>Quick Actions</h3>
+                    <ul class="sidebar-menu">
+                        <li onclick="openModal('createProfile')">
+                            <span>✏️</span> Update Profile
+                        </li>
+                        <li onclick="openModal('postJob')">
+                            <span>➕</span> Post Job
+                        </li>
+                        <li onclick="openModal('requestMentor')">
+                            <span>🙋</span> Request Mentor
+                        </li>
+                    </ul>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <!-- Overview Section -->
+                <div id="overview-section" class="content-section">
+                    <h1 style="margin-bottom: 1.5rem;">Welcome back, Priya! 👋</h1>
+                    
+                    <!-- Stats Grid -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon blue">🎯</div>
+                            <div class="stat-info">
+                                <h3>87%</h3>
+                                <p>Match Score</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon green">💼</div>
+                            <div class="stat-info">
+                                <h3>24</h3>
+                                <p>Job Opportunities</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon orange">👥</div>
+                            <div class="stat-info">
+                                <h3>156</h3>
+                                <p>Network Connections</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon purple">⭐</div>
+                            <div class="stat-info">
+                                <h3>12</h3>
+                                <p>Active Mentorships</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AI Recommended Matches -->
+                    <div class="section" style="margin-top: 2rem;">
+                        <div class="section-header">
+                            <h2>🤖 AI-Powered Mentor Matches</h2>
+                            <button class="btn btn-secondary" onclick="showSection('matches')">View All</button>
+                        </div>
+                        <div class="match-grid">
+                            <div class="match-card">
+                                <div class="match-header">
+                                    <div class="avatar">RK</div>
+                                    <div class="match-info">
+                                        <h3>Rajesh Kumar</h3>
+                                        <p>Senior Product Manager @ Google</p>
+                                        <span class="match-score">92% Match</span>
+                                    </div>
+                                </div>
+                                <div class="match-tags">
+                                    <span class="tag">Product Management</span>
+                                    <span class="tag">AI/ML</span>
+                                    <span class="tag">Strategy</span>
+                                </div>
+                                <p style="color: var(--color-text-light); font-size: 0.875rem; margin: 0.5rem 0;">
+                                    IIT Delhi '10 • 12+ years experience • Available for 1:1 mentorship
+                                </p>
+                                <div class="match-actions">
+                                    <button class="btn btn-primary btn-sm" onclick="connectMentor('Rajesh Kumar')">Connect</button>
+                                    <button class="btn btn-secondary btn-sm">View Profile</button>
+                                </div>
+                            </div>
+
+                            <div class="match-card">
+                                <div class="match-header">
+                                    <div class="avatar">AS</div>
+                                    <div class="match-info">
+                                        <h3>Anita Sharma</h3>
+                                        <p>Tech Lead @ Microsoft</p>
+                                        <span class="match-score">88% Match</span>
+                                    </div>
+                                </div>
+                                <div class="match-tags">
+                                    <span class="tag">Software Engineering</span>
+                                    <span class="tag">Cloud</span>
+                                    <span class="tag">Leadership</span>
+                                </div>
+                                <p style="color: var(--color-text-light); font-size: 0.875rem; margin: 0.5rem 0;">
+                                    BITS Pilani '12 • 10+ years experience • Open to career guidance
+                                </p>
+                                <div class="match-actions">
+                                    <button class="btn btn-primary btn-sm" onclick="connectMentor('Anita Sharma')">Connect</button>
+                                    <button class="btn btn-secondary btn-sm">View Profile</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Job Postings -->
+                    <div class="section" style="margin-top: 2rem;">
+                        <div class="section-header">
+                            <h2>💼 Featured Job Opportunities</h2>
+                            <button class="btn btn-secondary" onclick="showSection('jobs')">View All Jobs</button>
+                        </div>
+                        <div class="job-list">
+                            <div class="job-card">
+                                <div class="job-info">
+                                    <div class="company-logo">G</div>
+                                    <div class="job-details">
+                                        <h3>Product Manager - AI Products</h3>
+                                        <div class="job-meta">
+                                            <span>📍 Vijayawada</span>
+                                            <span>💰 ₹25-35 LPA</span>
+                                            <span>🕒 Full-time</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; gap: 1rem; align-items: center;">
+                                    <span class="badge badge-success">Alumni Referral</span>
+                                    <button class="btn btn-primary btn-sm">Apply Now</button>
+                                </div>
+                            </div>
+
+                            <div class="job-card">
+                                <div class="job-info">
+                                    <div class="company-logo">M</div>
+                                    <div class="job-details">
+                                        <h3>Senior Software Engineer</h3>
+                                        <div class="job-meta">
+                                            <span>📍 Hyderabad</span>
+                                            <span>💰 ₹30-40 LPA</span>
+                                            <span>🕒 Full-time</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; gap: 1rem; align-items: center;">
+                                    <span class="badge badge-warning">Hot Role</span>
+                                    <button class="btn btn-primary btn-sm">Apply Now</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Matches Section -->
+                <div id="matches-section" class="content-section" style="display: none;">
+                    <div class="section">
+                        <h2 style="margin-bottom: 1.5rem;">🤖 AI-Powered Matches</h2>
+                        
+                        <!-- Tabs -->
+                        <div class="tabs">
+                            <button class="tab active" onclick="switchTab('mentors')">Mentor Matches</button>
+                            <button class="tab" onclick="switchTab('peers')">Peer Connections</button>
+                            <button class="tab" onclick="switchTab('opportunities')">Job Matches</button>
+                        </div>
+
+                        <!-- Search and Filters -->
+                        <div class="search-section">
+                            <input type="text" class="search-input" placeholder="Search by skills, industry, or expertise..." id="searchInput">
+                            <select onchange="filterMatches(this.value)">
+                                <option value="all">All Industries</option>
+                                <option value="tech">Technology</option>
+                                <option value="finance">Finance</option>
+                                <option value="healthcare">Healthcare</option>
+                                <option value="education">Education</option>
+                            </select>
+                            <select onchange="filterByExperience(this.value)">
+                                <option value="all">All Experience</option>
+                                <option value="0-3">0-3 years</option>
+                                <option value="3-7">3-7 years</option>
+                                <option value="7+">7+ years</option>
+                            </select>
+                        </div>
+
+                        <!-- Matches Grid -->
+                        <div class="match-grid" id="matchesGrid">
+                            <div class="match-card">
+                                <div class="match-header">
+                                    <div class="avatar">PR</div>
+                                    <div class="match-info">
+                                        <h3>Prabhas Raju</h3>
+                                        <p>Engineering Director @ Amazon</p>
+                                        <span class="match-score">95% Match</span>
+                                    </div>
+                                </div>
+                                <div class="match-tags">
+                                    <span class="tag">System Design</span>
+                                    <span class="tag">Distributed Systems</span>
+                                    <span class="tag">Leadership</span>
+                                </div>
+                                <p style="color: var(--color-text-light); font-size: 0.875rem; margin: 0.5rem 0;">
+                                    IIT Bombay '08 • 15+ years • Mentored 50+ engineers
+                                </p>
+                                <div class="match-actions">
+                                    <button class="btn btn-primary btn-sm" onclick="connectMentor('Vikram Gupta')">Connect</button>
+                                    <button class="btn btn-secondary btn-sm">Schedule Call</button>
+                                </div>
+                            </div>
+
+                            <div class="match-card">
+                                <div class="match-header">
+                                    <div class="avatar">SG</div>
+                                    <div class="match-info">
+                                        <h3>Sahasra Grandhe</h3>
+                                        <p>VP Product @ Flipkart</p>
+                                        <span class="match-score">91% Match</span>
+                                    </div>
+                                </div>
+                                <div class="match-tags">
+                                    <span class="tag">Product Strategy</span>
+                                    <span class="tag">E-commerce</span>
+                                    <span class="tag">Growth</span>
+                                </div>
+                                <p style="color: var(--color-text-light); font-size: 0.875rem; margin: 0.5rem 0;">
+                                    NIT Trichy '11 • 13+ years • Active mentor
+                                </p>
+                                <div class="match-actions">
+                                    <button class="btn btn-primary btn-sm" onclick="connectMentor('Priya Mehta')">Connect</button>
+                                    <button class="btn btn-secondary btn-sm">View Profile</button>
+                                </div>
+                            </div>
+
+                            <div class="match-card">
+                                <div class="match-header">
+                                    <div class="avatar">MR</div>
+                                    <div class="match-info">
+                                        <h3>Manoj Reddy</h3>
+                                        <p>Data Science Lead @ Netflix</p>
+                                        <span class="match-score">89% Match</span>
+                                    </div>
+                                </div>
+                                <div class="match-tags">
+                                    <span class="tag">Machine Learning</span>
+                                    <span class="tag">Data Science</span>
+                                    <span class="tag">Analytics</span>
+                                </div>
+                                <p style="color: var(--color-text-light); font-size: 0.875rem; margin: 0.5rem 0;">
+                                    IIT Madras '13 • 11+ years • Open to mentorship
+                                </p>
+                                <div class="match-actions">
+                                    <button class="btn btn-primary btn-sm" onclick="connectMentor('Sanjay Kumar')">Connect</button>
+                                    <button class="btn btn-secondary btn-sm">Send Message</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Jobs Section -->
+                <div id="jobs-section" class="content-section" style="display: none;">
+                    <div class="section">
+                        <h2 style="margin-bottom: 1.5rem;">💼 Alumni Job Board</h2>
+                        
+                        <!-- Search and Filters -->
+                        <div class="search-section">
+                            <input type="text" class="search-input" placeholder="Search jobs by title, company, or skills...">
+                            <select>
+                                <option>All Locations</option>
+                                <option>Bangalore</option>
+                                <option>Mumbai</option>
+                                <option>Delhi NCR</option>
+                                <option>Hyderabad</option>
+                                <option>Remote</option>
+                            </select>
+                            <select>
+                                <option>All Types</option>
+                                <option>Full-time</option>
+                                <option>Internship</option>
+                                <option>Contract</option>
+                            </select>
+                            <button class="btn btn-primary" onclick="openModal('postJob')">Post a Job</button>
+                        </div>
+
+                        <!-- Job Listings -->
+                        <div class="job-list">
+                            <div class="job-card">
+                                <div class="job-info">
+                                    <div class="company-logo">T</div>
+                                    <div class="job-details">
+                                        <h3>Senior Frontend Developer</h3>
+                                        <div class="job-meta">
+                                            <span>📍 Vijayawada • Remote</span>
+                                            <span>💰 ₹20-28 LPA</span>
+                                            <span>🕒 Full-time</span>
+                                            <span>Posted by: Amit rathod (IIT-D '15)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; gap: 1rem; align-items: center;">
+                                    <span class="badge badge-success">Alumni Referral</span>
+                                    <button class="btn btn-primary btn-sm" onclick="applyJob('Senior Frontend Developer')">Apply Now</button>
+                                </div>
+                            </div>
+
+                            <div class="job-card">
+                                <div class="job-info">
+                                    <div class="company-logo">S</div>
+                                    <div class="job-details">
+                                        <h3>Product Manager - Fintech</h3>
+                                        <div class="job-meta">
+                                            <span>📍 Mumbai</span>
+                                            <span>💰 ₹25-35 LPA</span>
+                                            <span>🕒 Full-time</span>
+                                            <span>Posted by: Neha shetty (BITS '14)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; gap: 1rem; align-items: center;">
+                                    <span class="badge badge-warning">Hot Role</span>
+                                    <button class="btn btn-primary btn-sm" onclick="applyJob('Product Manager')">Apply Now</button>
+                                </div>
+                            </div>
+
+                            <div class="job-card">
+                                <div class="job-info">
+                                    <div class="company-logo">A</div>
+                                    <div class="job-details">
+                                        <h3>Machine Learning Engineer</h3>
+                                        <div class="job-meta">
+                                            <span>📍 Hyderabad</span>
+                                            <span>💰 ₹30-45 LPA</span>
+                                            <span>🕒 Full-time</span>
+                                            <span>Posted by: bichhal deva (IIT-B '12)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; gap: 1rem; align-items: center;">
+                                    <span class="badge badge-success">Alumni Referral</span>
+                                    <button class="btn btn-primary btn-sm" onclick="applyJob('ML Engineer')">Apply Now</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mentorship Section -->
+                <div id="mentorship-section" class="content-section" style="display: none;">
+                    <div class="section">
+                        <h2 style="margin-bottom: 1.5rem;">👨‍🏫 Active Mentorship Programs</h2>
+                        
+                        <div class="stats-grid" style="margin-bottom: 2rem;">
+                            <div class="stat-card">
+                                <div class="stat-icon blue">🎯</div>
+                                <div class="stat-info">
+                                    <h3>5</h3>
+                                    <p>Active Sessions</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon green">✅</div>
+                                <div class="stat-info">
+                                    <h3>12</h3>
+                                    <p>Completed Sessions</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon orange">⏰</div>
+                                <div class="stat-info">
+                                    <h3>24hrs</h3>
+                                    <p>Total Mentorship</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon purple">⭐</div>
+                                <div class="stat-info">
+                                    <h3>4.8</h3>
+                                    <p>Average Rating</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 style="margin-bottom: 1rem;">Your Mentors</h3>
+                        <div class="match-grid">
+                            <div class="match-card">
+                                <div class="match-header">
+                                    <div class="avatar">RK</div>
+                                    <div class="match-info">
+                                        <h3>Ravi Kumar</h3>
+                                        <p>Product Manager @ Google</p>
+                                    </div>
+                                </div>
+                                <p style="margin: 1rem 0; color: var(--color-text-light); font-size: 0.875rem;">
+                                    Next session: Nov 2, 2025 at 6:00 PM IST
+                                </p>
+                                <div class="match-actions">
+                                    <button class="btn btn-primary btn-sm">Join Session</button>
+                                    <button class="btn btn-secondary btn-sm">Reschedule</button>
+                                </div>
+                            </div>
+
+                            <div class="match-card">
+                                <div class="match-header">
+                                    <div class="avatar">AS</div>
+                                    <div class="match-info">
+                                        <h3>Anita Sharma</h3>
+                                        <p>Tech Lead @ Microsoft</p>
+                                    </div>
+                                </div>
+                                <p style="margin: 1rem 0; color: var(--color-text-light); font-size: 0.875rem;">
+                                    Last session: Oct 18, 2025 • Rate your experience
+                                </p>
+                                <div class="match-actions">
+                                    <button class="btn btn-primary btn-sm">Leave Feedback</button>
+                                    <button class="btn btn-secondary btn-sm">Book Next</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 2rem; text-align: center;">
+                            <button class="btn btn-primary" onclick="openModal('requestMentor')">Request New Mentor</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Network Section -->
+                <div id="network-section" class="content-section" style="display: none;">
+                    <div class="section">
+                        <h2 style="margin-bottom: 1.5rem;">🌐 Your Alumni Network</h2>
+                        
+                        <div class="search-section">
+                            <input type="text" class="search-input" placeholder="Search by name, batch, company, or location...">
+                            <select>
+                                <option>All Batches</option>
+                                <option>2020-2024</option>
+                                <option>2015-2019</option>
+                                <option>2010-2014</option>
+                                <option>Before 2010</option>
+                            </select>
+                        </div>
+
+                        <div class="match-grid">
+                            <div class="match-card">
+                                <div class="match-header">
+                                    <div class="avatar">AS</div>
+                                    <div class="match-info">
+                                        <h3>Arun Singh</h3>
+                                        <p>Founder @ TechStartup</p>
+                                    </div>
+                                </div>
+                                <div class="match-tags">
+                                    <span class="tag">Entrepreneurship</span>
+                                    <span class="tag">B2B SaaS</span>
+                                </div>
+                                <p style="color: var(--color-text-light); font-size: 0.875rem; margin: 0.5rem 0;">
+                                    Batch of 2015 • Bangalore • 156 mutual connections
+                                </p>
+                                <div class="match-actions">
+                                    <button class="btn btn-primary btn-sm">Connect</button>
+                                    <button class="btn btn-secondary btn-sm">Message</button>
+                                </div>
+                            </div>
+
+                            <div class="match-card">
+                                <div class="match-header">
+                                    <div class="avatar">NK</div>
+                                    <div class="match-info">
+                                        <h3>Nisha Kapoor</h3>
+                                        <p>UX Designer @ Adobe</p>
+                                    </div>
+                                </div>
+                                <div class="match-tags">
+                                    <span class="tag">Design</span>
+                                    <span class="tag">User Research</span>
+                                </div>
+                                <p style="color: var(--color-text-light); font-size: 0.875rem; margin: 0.5rem 0;">
+                                    Batch of 2017 • San Francisco • 89 mutual connections
+                                </p>
+                                <div class="match-actions">
+                                    <button class="btn btn-primary btn-sm">Connect</button>
+                                    <button class="btn btn-secondary btn-sm">Message</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Modal for Profile/Job Posting/Mentor Request -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Update Profile</h2>
+                <span class="modal-close" onclick="closeModal()">✕</span>
+            </div>
+            <div id="modalBody">
+                <!-- Dynamic content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Message -->
+    <div id="successMessage" class="success-message">
+        ✓ Action completed successfully!
+    </div>
+
+    <script>
+        // Section Navigation
+        function showSection(sectionName) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            // Show selected section
+            document.getElementById(sectionName + '-section').style.display = 'block';
+            
+            // Update sidebar active state
+            document.querySelectorAll('.sidebar-menu li').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        // Tab Switching
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // In a real app, this would load different content
+            console.log('Switched to tab:', tabName);
+        }
+
+        // Modal Functions
+        function openModal(type) {
+            const modal = document.getElementById('modal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalBody = document.getElementById('modalBody');
+            
+            let content = '';
+            
+            switch(type) {
+                case 'createProfile':
+                    modalTitle.textContent = 'Update Your Profile';
+                    content = `
+                        <form onsubmit="submitProfile(event)">
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input type="text" value="Priya Sharma" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Current Role</label>
+                                <input type="text" value="Software Engineer">
+                            </div>
+                            <div class="form-group">
+                                <label>Company</label>
+                                <input type="text" value="TCS">
+                            </div>
+                            <div class="form-group">
+                                <label>Skills (comma-separated)</label>
+                                <input type="text" value="JavaScript, React, Node.js, Python">
+                            </div>
+                            <div class="form-group">
+                                <label>Bio</label>
+                                <textarea>Passionate software engineer with 3 years of experience...</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Available for Mentorship</label>
+                                <select>
+                                    <option>Yes</option>
+                                    <option>No</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">Save Profile</button>
+                        </form>
+                    `;
+                    break;
+                    
+                case 'postJob':
+                    modalTitle.textContent = 'Post a Job Opportunity';
+                    content = `
+                        <form onsubmit="submitJob(event)">
+                            <div class="form-group">
+                                <label>Job Title</label>
+                                <input type="text" placeholder="e.g., Senior Software Engineer" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Company</label>
+                                <input type="text" placeholder="Your company name" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Location</label>
+                                <input type="text" placeholder="e.g., Bangalore, Remote">
+                            </div>
+                            <div class="form-group">
+                                <label>Salary Range (LPA)</label>
+                                <input type="text" placeholder="e.g., 15-20">
+                            </div>
+                            <div class="form-group">
+                                <label>Job Type</label>
+                                <select>
+                                    <option>Full-time</option>
+                                    <option>Internship</option>
+                                    <option>Contract</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Job Description</label>
+                                <textarea placeholder="Describe the role, responsibilities, and requirements..." required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Required Skills</label>
+                                <input type="text" placeholder="e.g., React, Node.js, AWS">
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">Post Job</button>
+                        </form>
+                    `;
+                    break;
+                    
+                case 'requestMentor':
+                    modalTitle.textContent = 'Request a Mentor';
+                    content = `
+                        <form onsubmit="submitMentorRequest(event)">
+                            <div class="form-group">
+                                <label>What are you looking for help with?</label>
+                                <select required>
+                                    <option value="">Select an area...</option>
+                                    <option>Career Guidance</option>
+                                    <option>Technical Skills</option>
+                                    <option>Job Search Strategy</option>
+                                    <option>Interview Preparation</option>
+                                    <option>Entrepreneurship</option>
+                                    <option>Leadership Development</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Preferred Industry</label>
+                                <select>
+                                    <option>Technology</option>
+                                    <option>Finance</option>
+                                    <option>Healthcare</option>
+                                    <option>Education</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Experience Level You're Seeking</label>
+                                <select>
+                                    <option>5-10 years</option>
+                                    <option>10-15 years</option>
+                                    <option>15+ years</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Tell us more about your goals</label>
+                                <textarea placeholder="What specific challenges are you facing? What do you hope to achieve through mentorship?" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">Submit Request</button>
+                        </form>
+                    `;
+                    break;
+            }
+            
+            modalBody.innerHTML = content;
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+
+        // Form Submissions
+        function submitProfile(event) {
+            event.preventDefault();
+            showSuccess('Profile updated successfully!');
+            closeModal();
+        }
+
+        function submitJob(event) {
+            event.preventDefault();
+            showSuccess('Job posted successfully! Your listing is now live.');
+            closeModal();
+        }
+
+        function submitMentorRequest(event) {
+            event.preventDefault();
+            showSuccess('Mentor request submitted! We\'ll match you with suitable mentors within 24 hours.');
+            closeModal();
+        }
+
+        // Actions
+        function connectMentor(name) {
+            showSuccess(`Connection request sent to ${name}!`);
+        }
+
+        function applyJob(jobTitle) {
+            showSuccess(`Application submitted for ${jobTitle}! The poster will review your profile.`);
+        }
+
+        function filterMatches(industry) {
+            console.log('Filtering by industry:', industry);
+            // In a real app, this would filter the matches grid
+        }
+
+        function filterByExperience(experience) {
+            console.log('Filtering by experience:', experience);
+            // In a real app, this would filter the matches grid
+        }
+
+        // Success Message
+        function showSuccess(message) {
+            const successMsg = document.getElementById('successMessage');
+            successMsg.textContent = '✓ ' + message;
+            successMsg.classList.add('show');
+            
+            setTimeout(() => {
+                successMsg.classList.remove('show');
+            }, 3000);
+        }
+
+        // Search functionality
+        document.getElementById('searchInput')?.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            // In a real app, this would filter matches based on search term
+            console.log('Searching for:', searchTerm);
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Initialize - show overview by default
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('AlumniConnect Platform Loaded');
+            // In a real app, this would load user data and initialize AI matching
+        });
+    </script>
+</body>
+</html>
